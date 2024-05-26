@@ -16,7 +16,7 @@ def observation_list(request):
         .filter(model="meta-llama/Llama-3-70b-chat-hf")
         .exclude(level="ERROR")
         .filter(metadata__version__icontains="0.0.2")
-        .filter(name="business_value_w_format_validation")
+        .filter(name="business_value_w_format_validation").values('name', 'output', 'metadata')
     )  # Order by a unique field
 
     paginator = Paginator(observations, 2)
@@ -29,8 +29,8 @@ def observation_list(request):
 
     # Parse the JSON data for each observation
     for observation in page_obj.object_list:
-        #print(observation.output['content'])
-        observation.content_data = json.loads(observation.output['content'])
+        print(observation)
+        observation['content_data'] = json.loads(observation['output']['content'])
 
     context = {
         "page_obj": page_obj,
