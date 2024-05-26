@@ -14,7 +14,7 @@ def observation_list(request):
     observations = Observation.objects.all().filter(model="meta-llama/Llama-3-70b-chat-hf").exclude(level="ERROR").filter(metadata__version__icontains="0.0.2").filter(name="business_value_w_format_validation")
 
     # Create a Paginator object with the observations and the desired number of items per page
-    paginator = Paginator(observations, 2)
+    paginator = Paginator(observations, 4)
 
     # Get the current page number from the request's GET parameters
     page_number = request.GET.get('page')
