@@ -17,10 +17,10 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from nice.views import base_view
+from nice.views import base_view, observation_list
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", base_view, name="base_view"),
+    path("", observation_list, name="observation_list"),
     path("__reload__", include("django_browser_reload.urls")),
 ]

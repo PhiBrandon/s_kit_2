@@ -2,6 +2,7 @@
 <html>
 {% load static tailwind_tags %}
 {% load static %}
+
 <head>
     <title>{% block title %}{% endblock %}</title>
     {% tailwind_css %}
@@ -9,11 +10,10 @@
 </head>
 
 <body>
-    <div class="bg-red-300">
-        <h1 class="text-lg">Welcome</h1>
+    <div>
+        {% block content %}{% endblock %}
     </div>
-    
-    {% block content %}{% endblock %}
+
 </body>
 
 </html>

@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="min-h-screen min-w-full bg-gray-100 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold mb-8">Observations</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+            {% for observation in page_obj %}
+            <div class="bg-white rounded-lg shadow-md p-6 flex flex-col min-w-96">
+                <h2 class="text-xl font-bold mb-4">{{ observation.name }}</h2>
+                <div class="mb-6 flex-grow">
+                    <h3 class="text-lg font-semibold mb-2">Business Goals</h3>
+                    {% for goal in observation.content_data.business_goal %}
+                    <div class="mb-2">
+                        <p><strong>Inferred Goal:</strong> {{ goal.inferred_goal }}</p>
+                        <p><strong>Goal Reference:</strong> {{ goal.goal_reference }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mb-6 flex-grow">
+                    <h3 class="text-lg font-semibold mb-2">Job Values</h3>
+                    {% for value in observation.content_data.job_values %}
+                    <div class="mb-2">
+                        <p><strong>Inferred Value:</strong> {{ value.inferred_value }}</p>
+                        <p><strong>Value Reference:</strong> {{ value.value_reference }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">MVP Idea</h3>
+                    <p>{{ observation.content_data.mvp_idea }}</p>
+                </div>
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-2">Industry</h3>
+                    <p>{{ observation.content_data.company_industry }}</p>
+                </div>
+                <div class="flex-grow">
+                    <h3 class="text-lg font-semibold mb-2">Job Skills</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {% for skill in observation.content_data.job_skills.skills %}
+                        <div>
+                            <p><strong>Skill Label:</strong> {{ skill.skill_label }}</p>
+                            <p><strong>Skill Name:</strong> {{ skill.skill_name }}</p>
+                            <p><strong>Original Reference:</strong> {{ skill.original_reference }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <!-- Pagination links -->
+        <div class="mt-8 flex justify-center">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 mr-2">Previous</a>
+            {% endif %}
+            <span class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 ml-2">Next</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
